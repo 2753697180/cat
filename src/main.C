@@ -14,5 +14,5 @@
 int
 main(int argc, char * argv[])
 {
-  return Moose::main<catTestApp>(argc, argv);
+      return Moose::main<catTestApp>(argc, argv);
 }
