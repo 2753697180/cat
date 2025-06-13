@@ -4,8 +4,8 @@
 #!include z_dev.i
 [Variables]
   [T]
-    family = MONOMIAL
-    order  = CONSTANT
+    family = LAGRANGE
+    order  = FIRST
     initial_condition = '400' 
   []
 []
@@ -40,6 +40,14 @@
     variable = T
   []
 []
+[AuxKernels]
+  [Twall]
+    type = ProjectionAux
+    v = T
+    variable = T_wall
+    boundary = '1'
+  []
+[]
 [BCs]
   [heat_q]
     type = NeumannBC
@@ -57,6 +65,7 @@
     scale_factor = '1.0'
   []
 []
+
 [UserObjects]
   [T_wall1]
     type = LayeredSideAverage
@@ -98,23 +107,26 @@
     #app_type = ThermalHydraulicsApp
     type = TransientMultiApp
     input_files = 'f.i'
-    execute_on = 'TIMESTEP_BEGIN'
+    execute_on = MULTIAPP_FIXED_POINT_BEGIN
     #sub_cycling = true
   []
 []
 [Executioner]
-  #fixed_point_max_its = 10
   type = Transient
   solve_type = PJFNK
   automatic_scaling = true
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  end_time = 0.005
+  end_time = 0.01
   dt = 0.001
   dtmin = 1e-4
   start_time = 0
   steady_state_tolerance = 1e-5
   steady_state_detection = true
+  fixed_point_max_its = 10
+  nl_abs_tol = 1e-6
+  fixed_point_rel_tol = 1e-6
+  fixed_point_abs_tol = 1e-8
 []
 [Postprocessors]
   [T_f]
@@ -135,20 +147,25 @@
     variable = htcp
     execute_on='timestep_end'
   []
-  [q]
+  [q1]
     type=ConvectiveHeatTransferSideIntegral
     T_solid = T
     boundary = 1
     T_fluid_var = T_fluid_3
     htc_var = htcp
+    execute_on = 'TIMESTEP_END'
+  []
+  [q2]
+    type=ConvectiveHeatTransferSideIntegral
+    T_solid = T_wall
+    boundary = 1
+    T_fluid_var = T_fluid_3
+    htc_var = htcp
+    execute_on = 'TIMESTEP_END'
   []
 []
 [Outputs]
   exodus = true
-   [csv]
-  type = CSV
-  append_date = true
-  []
 []
 [Transfers]
   [T_fluid1]
@@ -156,7 +173,6 @@
     from_multi_app = sub_app
     source_variable = T
     variable = T_fluid_3
-    execute_on = 'TIMESTEP_BEGIN INITIAL'
     from_blocks = core1
     to_boundaries = '1'
     search_value_conflicts = false
@@ -166,7 +182,6 @@
     from_multi_app = sub_app
     source_variable = 'htc'
     variable = 'htcp'
-    execute_on = 'TIMESTEP_BEGIN INITIAL'
     from_blocks= core1
     to_boundaries='1'
     search_value_conflicts = false
@@ -174,26 +189,37 @@
   [Tw1]
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
-    source_variable = 'T'
+    source_variable = 'T_wall'
     variable = 'T_wall'
-    execute_on = 'TIMESTEP_END INITIAL'
     to_blocks= core1
     from_boundaries='1'
     search_value_conflicts = false
   []
 []
 [VectorPostprocessors]
-  [Tf]
-    type = SpatialUserObjectVectorPostprocessor
-    userobject =T_fluid_uo
+  [T_point]
+   type = SideValueSampler
+   boundary = '1'
+   sort_by = Z
+   variable =T 
   []
-  [Tw]
-    type = SpatialUserObjectVectorPostprocessor
-    userobject =T_wall1
+  [T_wall_point]
+   type = SideValueSampler
+   boundary = '1'
+   sort_by = Z
+   variable =T_wall
   []
-  [htc1]
-    type = SpatialUserObjectVectorPostprocessor
-    userobject =htc2
+  [T_fluid3_point]
+   type = SideValueSampler
+   boundary = '1'
+   sort_by = Z
+   variable =T_fluid_3
+  []
+  [htc_point]
+   type = SideValueSampler
+   boundary = '1'
+   sort_by = Z
+   variable =htcp
   []
 []
 

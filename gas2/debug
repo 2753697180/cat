@@ -1,0 +1,5 @@
+[Debug]
+  show_mesh_meta_data = true
+  show_execution_order = TIMESTEP_BEGIN
+  show_var_residual_norms = true
+[]

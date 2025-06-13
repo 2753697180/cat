@@ -1,0 +1,300 @@
+[T_fluid2]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core2
+    to_boundaries = '2'
+    search_value_conflicts = false
+  []
+  [htc2]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core2
+    to_boundaries='2'
+    search_value_conflicts = false
+  []
+  [Tw2]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core2
+    from_boundaries='2'
+    search_value_conflicts = false
+  []
+  [T_fluid3]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core3
+    to_boundaries = '3'
+    search_value_conflicts = false
+  []
+  [htc3]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core3
+    to_boundaries='3'
+    search_value_conflicts = false
+  []
+  [Tw3]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core3
+    from_boundaries='3'
+    search_value_conflicts = false
+  []
+  [T_fluid4]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core4
+    to_boundaries = '4'
+    search_value_conflicts = false
+  []
+  [htc4]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core4
+    to_boundaries='4'
+    search_value_conflicts = false
+  []
+  [Tw4]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core4
+    from_boundaries='4'
+    search_value_conflicts = false
+  []
+  [T_fluid5]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core5
+    to_boundaries = '5'
+    search_value_conflicts = false
+  []
+  [htc5]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core5
+    to_boundaries='5'
+    search_value_conflicts = false
+  []
+  [Tw6]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core6
+    from_boundaries='6'
+    search_value_conflicts = false
+  []
+  [T_fluid7]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core7
+    to_boundaries = '7'
+    search_value_conflicts = false
+  []
+  [htc7]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core7
+    to_boundaries='7'
+    search_value_conflicts = false
+  []
+  [Tw7]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core7
+    from_boundaries='7'
+    search_value_conflicts = false
+  []
+  [T_fluid8]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core8
+    to_boundaries = '8'
+    search_value_conflicts = false
+  []
+  [htc8]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core8
+    to_boundaries='8'
+    search_value_conflicts = false
+  []
+  [Tw8]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core8
+    from_boundaries='8'
+    search_value_conflicts = false
+  []
+  [T_fluid9]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core9
+    to_boundaries = '9'
+    search_value_conflicts = false
+  []
+  [htc9]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core9
+    to_boundaries='9'
+    search_value_conflicts = false
+  []
+  [Tw9]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core9
+    from_boundaries='9'
+    search_value_conflicts = false
+  []
+  [T_fluid10]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core10
+    to_boundaries = '10'
+    search_value_conflicts = false
+  []
+  [htc10]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core10
+    to_boundaries='10'
+    search_value_conflicts = false
+  []
+  [Tw10]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core10
+    from_boundaries='10'
+    search_value_conflicts = false
+  []
+  [T_fluid11]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core11
+    to_boundaries = '11'
+    search_value_conflicts = false
+  []
+  [htc11]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core11
+    to_boundaries='11'
+    search_value_conflicts = false
+  []
+  [Tw11]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core11
+    from_boundaries='11'
+    search_value_conflicts = false
+  []
+  [T_fluid12]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = T
+    variable = T_fluid_3
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks = core12
+    to_boundaries = '12'
+    search_value_conflicts = false
+  []
+  [htc12]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    from_multi_app = sub_app
+    source_variable = 'htc'
+    variable = 'htcp'
+    execute_on = 'TIMESTEP_BEGIN INITIAL'
+    from_blocks= core12
+    to_boundaries='12'
+    search_value_conflicts = false
+  []
+  [Tw12]
+    type = MultiAppGeneralFieldNearestLocationTransfer
+    to_multi_app = sub_app
+    source_variable = 'T'
+    variable = 'T_wall'
+    execute_on = 'TIMESTEP_END INITIAL'
+    to_blocks= core12
+    from_boundaries='12'
+    search_value_conflicts = false
+  []

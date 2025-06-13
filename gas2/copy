@@ -1,0 +1,2 @@
+double epsilon = 1e-8;
+unsigned int bin_index = static_cast<unsigned int>((z - epsilon) / bin_width);

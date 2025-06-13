@@ -1,0 +1,49 @@
+[VectorPostprocessors]
+  [Tf]
+    type = SpatialUserObjectVectorPostprocessor
+    userobject =T_fluid_uo
+  []
+  [Tw]
+    type = SpatialUserObjectVectorPostprocessor
+    userobject =T_wall1
+  []
+  [htc]
+    type = SpatialUserObjectVectorPostprocessor
+    userobject =htc1
+  []
+[]
+  [q]
+    type=ConvectiveHeatTransferSideIntegral
+    T_solid = T
+    boundary = 1
+    T_fluid_var = T_fluid_3
+    htc_var = htcp
+  []
+[q]
+  type = ADHeatRateConvection1Phase
+  P_hf = 0.01570796
+  T_wall = T_wall
+  T=T
+  Hw=Hw
+  block = core1
+[] 
+[VectorPostprocessors]
+  [Tf_point]
+    type = ElementValueSampler
+    sort_by = Z 
+    variable = T
+    block = core1
+ []
+  [Tw_point]
+    type = ElementValueSampler
+    sort_by = Z 
+    variable = T_wall
+    block = core1
+ []
+  [htc_point]
+    type = ElementValueSampler
+    sort_by = Z 
+    variable = htc
+    block = core1
+  []   
+[]

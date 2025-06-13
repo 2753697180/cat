@@ -1,0 +1,44 @@
+[Postprocessors]
+  [T_f]
+    type = SideAverageValue
+    boundary = '1'
+    variable = T_fluid_3
+    execute_on='timestep_end'
+   []
+  [T]
+    type = SideAverageValue
+    boundary ='1'
+    variable = T
+    execute_on='timestep_end'
+  [] 
+  [htc]
+    type = SideAverageValue
+    boundary ='1'
+    variable = htcp
+    execute_on='timestep_end'
+  []
+  [T_wall]
+    type = SideAverageValue
+    boundary ='1'
+    variable = T_wall
+    execute_on='timestep_end'
+  [] 
+[]
+ [q]
+   type = ADHeatRateConvection1Phase
+    P_hf = 0.01570796
+    T_wall = T_wall
+    T=T
+    Hw=Hw
+    block = core1
+    execute_on = 'TIMESTEP_END'
+  [] 
+  [q2]
+   type = ADHeatRateConvection1Phase
+    P_hf = 0.01570796
+    T_wall = T_wall
+    T=T
+    Hw=Hw
+    block = core2
+    execute_on = 'TIMESTEP_END'
+  [] 

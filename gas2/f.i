@@ -37,7 +37,7 @@ press = 1e5 # Pa
   [htc]
     family = MONOMIAL
     order = CONSTANT
-    block = core1
+    block = 'core1 core2 core3 core4 core5 core6 core7 core8 core9 core10 core11 core12'
   []
   [T_fluid_1]
     family = MONOMIAL
@@ -220,9 +220,75 @@ press = 1e5 # Pa
     input = 'pipe2:out'
     p = ${press}
   []
-  [bc]
+  [bc1]
     type = HeatTransferFromExternalAppTemperature1Phase
-    flow_channel =core1
+    flow_channel= core1 
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc2]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core2
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc3]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core3
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc4]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core4
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc5]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core5
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc6]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core6
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc7]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core7
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc8]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core8
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc9]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core9 
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc10]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core10 
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc11]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core11
+    T_ext = T_wall
+    var_type = ELEMENTAL
+  []
+  [bc12]
+    type = HeatTransferFromExternalAppTemperature1Phase
+    flow_channel= core12
     T_ext = T_wall
     var_type = ELEMENTAL
   []
@@ -234,54 +300,41 @@ press = 1e5 # Pa
   []
 []
 [Postprocessors]
- [T_fluid]
-  type = ElementAverageValue
-  variable  = T
-  block =core1
-  execute_on = 'timestep_end'
- []
- [T_wall]
-  type = ElementAverageValue
-  variable = T_wall
-  block = core1
-  execute_on = 'timestep_end'
- []
- [htcp]
-  type = ElementAverageValue
-  variable = htc
-  block = core1
-  execute_on = 'timestep_end'
- []
- [q]
-  type = ADHeatRateConvection1Phase
-  P_hf = 0.01570796
-  T_wall = T_wall
-  T=T
-  Hw=Hw
-  block = core1
-  []  
-[]
-[UserObjects]
-  [T_fluid_uo]
-    type = LayeredAverage
-    direction ='Z'
+  [T_f]
+    type = ElementAverageValue
+    block = core1
     variable = T
-    block = core1
-    num_layers = 10
+    execute_on='timestep_end'
   []
-  [T_wall1]
-    type = LayeredAverage
-    direction ='Z'
-    variable = T_wall
+  [T_f2]
+    type = ElementAverageValue
+    block = core2
+    variable = T
+    execute_on='timestep_end'
+  []  
+  [htc]
+    type = ElementAverageValue
     block = core1
-    num_layers = 10
-  []
-  [htc1]
-    type = LayeredAverage
-    direction ='Z'
     variable = htc
+    execute_on='timestep_end'
+  []
+  [htc2]
+    type = ElementAverageValue
+    block = core2
+    variable = htc
+    execute_on='timestep_end'
+  []
+  [T_wall]
+    type = ElementAverageValue
     block = core1
-    num_layers = 10
+    variable = T_wall
+    execute_on='timestep_end'
+  []
+ [T_wall2]
+    type = ElementAverageValue
+    block = core2
+    variable = T_wall
+    execute_on='timestep_end'
   []
 []
 [Executioner]
@@ -289,7 +342,7 @@ press = 1e5 # Pa
   solve_type = PJFNK
   line_search = basic
   start_time = 0
-  end_time =50
+  end_time =120
   dt = 0.001
   dtmin=1e-4
   petsc_options_iname = '-pc_type'
@@ -303,28 +356,9 @@ press = 1e5 # Pa
   [console]
     type = Console
     max_rows = 1
-    outlier_variable_norms = false
-  []
-  [csv]
-    type = CSV
-    append_date=true
-  []
-  print_linear_residuals = false
-[]
-[VectorPostprocessors]
-  [Tf]
-    type = SpatialUserObjectVectorPostprocessor
-    userobject =T_fluid_uo
-  []
-  [Tw]
-    type = SpatialUserObjectVectorPostprocessor
-    userobject =T_wall1
-  []
-  [htc]
-    type = SpatialUserObjectVectorPostprocessor
-    userobject =htc1
   []
 []
+
 
   
 
