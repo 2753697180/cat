@@ -79,7 +79,7 @@
   [sub_app]
     #app_type = ThermalHydraulicsApp
     type = TransientMultiApp
-    input_files = 'f4h.i'
+    input_files = 'f6.i'
     execute_on = 'TIMESTEP_END MULTIAPP_FIXED_POINT_BEGIN'
     sub_cycling = true
   []
@@ -97,7 +97,6 @@
   steady_state_tolerance = 1e-5
   steady_state_detection = true
   fixed_point_max_its = 10
-  fixed_point_min_its = 2
   nl_abs_tol = 1e-6
   fixed_point_rel_tol = 1e-6
   fixed_point_abs_tol = 1e-8

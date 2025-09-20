@@ -1,19 +1,14 @@
 T_in = 300. # K
-m_dot_in = 0.01# kg/s
-press = 30e5 # Pa
+press = 10e5 # Pa
+m_dot_in = 1e-2 # kg/s
 # core parameters
-core_inv=0.001#m/s
-core_length=0.6 #m
-core_elems=30
-core_dia = '${units 2. cm -> m}'
-core_A_pipe = '${fparse 0.25 * pi * core_dia^2}'
-#pipe parameters
+# pipe parameters
 pipe_dia = '${units 10. cm -> m}'
 A_pipe = '${fparse 0.25 * pi * pipe_dia^2}'
 [GlobalParams]
   initial_p = ${press} 
   initial_T = ${T_in}
-  initial_vel=0.0001
+  initial_vel=0.001
   gravity_vector = '0 0 0'
   rdg_slope_reconstruction = minmod
   scaling_factor_1phase = '1 1e-2 1e-4'
@@ -46,14 +41,9 @@ A_pipe = '${fparse 0.25 * pi * pipe_dia^2}'
   [htc]
     family = MONOMIAL
     order = CONSTANT
-    block = 'core1 core2 core3 core4 core5 core6 core7 core8 core9 core10 core11 core12'
+    block = 'core1 core2 core3 core4 core5 core6 core7 core8 core9 core10 core11 core12 cooling_pipe'
   []
-  [T_fluid_1]
-    family = MONOMIAL
-    order = CONSTANT
-    initial_condition = 300
-  []
-  [T_wall]
+  [T_w]
     family = MONOMIAL
     order = CONSTANT
     initial_condition = 400
@@ -67,168 +57,290 @@ A_pipe = '${fparse 0.25 * pi * pipe_dia^2}'
   []
 []
 [Components]
-  [inlet]
-    type = InletMassFlowRateTemperature1Phase
-    input = 'pipe1:in'
-    m_dot = ${m_dot_in}
-    T = ${T_in}
-  []
-  [pipe1]
+  [up_pipe_1]
     type = FlowChannel1Phase
     position = '0 0 -0.5'
     orientation = '0 0 1'
     length = 0.5
     n_elems = 15
-    A = ${A_pipe}
-    D_h = ${pipe_dia}
+    A =3.14e-4 
+    D_h = 0.02
   []
   [core1]
     type = FlowChannel1Phase
     position = '-0.010 0.01732 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core2]
     type = FlowChannel1Phase
     position = '-0.02 0 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core3]
     type = FlowChannel1Phase
     position = '-0.010 -0.01732 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core4]
     type = FlowChannel1Phase
     position = '0.010 -0.01732 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core5]
     type = FlowChannel1Phase
     position = '0.02 0 0'
     orientation = '0 0 1'
-     length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core6]
     type = FlowChannel1Phase
     position = '0.010 0.01732 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core7]
     type = FlowChannel1Phase
     position = '-0.020 0.03464 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core8]
     type = FlowChannel1Phase
     position = '-0.04 0 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core9]
     type = FlowChannel1Phase
     position = '-0.020 -0.03464 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core10]
     type = FlowChannel1Phase
     position = '0.020 -0.03464 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core11]
     type = FlowChannel1Phase
     position = '0.040 0 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5
+    D_h = 0.005
   []
   [core12]
     type = FlowChannel1Phase
     position = '0.020 0.03464 0'
     orientation = '0 0 1'
-    length = ${core_length}
-    n_elems = ${core_elems}
-    A = ${core_A_pipe}
-    D_h = ${core_dia}
-    initial_vel = ${core_inv}
+    length = 0.55
+    n_elems = 10
+    A = 1.9635e-5 
+    D_h = 0.005
   []
   [jct1]
     type = VolumeJunction1Phase
     position = '0 0 0'
-    connections = 'pipe1:out core1:in core2:in core3:in core4:in core5:in core6:in core7:in core8:in core9:in core10:in core11:in core12:in'
-    volume = 1e-3
+    connections = 'up_pipe_1:out core1:in core2:in core3:in core4:in core5:in core6:in core7:in core8:in core9:in core10:in core11:in core12:in'
+    volume = 1e-4
     use_scalar_variables = false
   []
-  [pipe2]
+  [up_pipe_2]
     type = FlowChannel1Phase
     position = '0 0 0.55'
     orientation = '0 0 1'
     length = 0.5
     n_elems = 15
-    A = ${A_pipe}
-    D_h = ${pipe_dia}
+    A =3.14e-4 
+    D_h = 0.02
   []
   [jct2]
     type =VolumeJunction1Phase
     position = '0 0 0.55'
-    connections = 'core1:out core2:out core3:out core4:out core5:out core6:out core7:out core8:out core9:out core10:out core11:out core12:out pipe2:in'
-    volume = 1e-3
+    connections = 'core1:out core2:out core3:out core4:out core5:out core6:out core7:out core8:out core9:out core10:out core11:out core12:out up_pipe_2:in'
+    volume = 1e-4
+    use_scalar_variables = false
+  []
+  [jct3]
+    type =VolumeJunction1Phase
+    position = '0 0 1.05'
+    volume = 1e-4
+    connections = 'up_pipe_2:out top_pipe_1:in'
     use_scalar_variables = false  
+  []
+  [top_pipe_1]
+    type = FlowChannel1Phase
+    position = '0 0 1.05'
+    orientation = '1 0 0'
+    length = 0.5
+    n_elems = 10
+    A = ${A_pipe}
+    D_h = ${pipe_dia}
+  []
+  [top_pipe_2]
+    type = FlowChannel1Phase
+    position = '0.5 0 1.05'
+    orientation = '1 0 0'
+    length = 0.5
+    n_elems = 20
+    A = ${A_pipe}
+    D_h = ${pipe_dia}
+  []
+  [press_pipe]
+    type = FlowChannel1Phase
+    position = '0.5 0 1.05'
+    orientation = '0 0 1'
+    length = 0.2
+    n_elems = 5
+    A = ${A_pipe}
+    D_h = ${pipe_dia}
+  []
+
+  [jct4]
+    type = VolumeJunction1Phase
+    position = '0.5 0 1.05'
+    volume = 1e-3
+    connections = 'top_pipe_1:out top_pipe_2:in press_pipe:in'
+    use_scalar_variables = false
+  []
+  [jct5]
+    type = VolumeJunction1Phase
+    position = '1 0 1.05'
+    volume = 1e-3
+    connections = 'top_pipe_2:out down_pipe_1:in '
+   use_scalar_variables = false
+  []
+  [down_pipe_1]
+    type = FlowChannel1Phase
+    position = '1 0 1.05'
+    orientation = '0 0 -1'
+    length = 0.25
+    A = ${A_pipe}
+    n_elems = 5
+  []
+  [jct6]
+    type = VolumeJunction1Phase
+    position = '1 0 0.8'
+    volume = 1e-5
+    connections = 'down_pipe_1:out cooling_pipe:in'
+    use_scalar_variables = false
+  []
+  [cooling_pipe]
+    type = FlowChannel1Phase
+    position = '1 0 0.8'
+    orientation = '0 0 -1'
+    length = 1.1
+    n_elems = 25
+    A = ${A_pipe}
+  []
+  [jct7]
+    type = VolumeJunction1Phase
+    position = '1 0 -0.3'
+    volume = 1e-5
+    connections = 'cooling_pipe:out down_pipe_2:in'
+    use_scalar_variables = false
+  []
+  [down_pipe_2]
+    type = FlowChannel1Phase
+    position = '1 0 -0.3'
+    orientation = '0 0 -1'
+    length = 0.2
+    n_elems = 10
+    A = ${A_pipe}
+    D_h = ${pipe_dia}
+  []
+  [jct8]
+    type = VolumeJunction1Phase
+    position = '1 0 -0.5'
+    volume = 1e-5
+    connections = 'down_pipe_2:out bottom_1:in'
+    use_scalar_variables = false
+  []
+  [bottom_1]
+    type = FlowChannel1Phase
+    position = '1 0 -0.5'
+    orientation = '-1 0 0'
+    length = 0.5
+    n_elems = 10
+    A = ${A_pipe}
+    D_h = ${pipe_dia}
+  []
+
+  [bottom_2]
+    type = FlowChannel1Phase
+    position = '0.5 0 -0.5'
+    orientation = '-1 0 0'
+    length = 0.5
+    n_elems = 10
+    A = ${ A_pipe}
+    D_h = ${pipe_dia}
+  []
+  [jct9]
+    type = VolumeJunction1Phase
+    position = '0 0 -0.5'
+    volume = 1e-5
+    connections = 'bottom_2:out up_pipe_1:in'
+    use_scalar_variables = false
+  []
+  #############boundry condition
+  [inlet]
+    type = InletMassFlowRateTemperature1Phase
+    input = 'bottom_2:in'
+    m_dot = ${m_dot_in}
+    T = ${T_in}
   []
   [outlet]
     type = Outlet1Phase
-    input = 'pipe2:out'
     p = ${press}
+    input = 'bottom_1:out'
+  []
+    [pressurizer]
+    type = Outlet1Phase
+    p = ${press}
+    input = press_pipe:out
+  []
+  [cold_wall]
+    type = HeatTransferFromSpecifiedTemperature1Phase
+    flow_channel = cooling_pipe
+    T_wall = ${T_in}
+    P_hf = '${fparse pi * pipe_dia}'
+    var_type = ELEMENTAL
   []
   [bc1]
     type = HeatTransferFromExternalAppTemperature1Phase
@@ -307,6 +419,18 @@ A_pipe = '${fparse 0.25 * pi * pipe_dia^2}'
   [pc]
     type = SMP
     full = true
+  []
+[]
+[Postprocessors]
+  [power_to_coolant]
+    type = ADHeatRateConvection1Phase
+    block = cooling_pipe
+    P_hf = '${fparse pi *pipe_dia}'
+  []
+  [p_t_h]
+    type = ADHeatRateConvection1Phase
+    P_hf =${fparse pi*0.005}
+    block = core1 
   []
 []
 [Executioner]

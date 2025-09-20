@@ -6,14 +6,14 @@
   [T]
     family = LAGRANGE
     order  = FIRST
-    initial_condition = '400' 
+    initial_condition = 300 
   []
 []
 [AuxVariables]
   [T_fluid_3]
     family = MONOMIAL
     order  = CONSTANT
-    initial_condition = '300'
+    initial_condition = 300
   []
   [htcp]
     family = MONOMIAL
@@ -79,7 +79,7 @@
   [sub_app]
     #app_type = ThermalHydraulicsApp
     type = TransientMultiApp
-    input_files = 'f4h.i'
+    input_files = 'f5np.i'
     execute_on = 'TIMESTEP_END MULTIAPP_FIXED_POINT_BEGIN'
     sub_cycling = true
   []
@@ -88,9 +88,9 @@
   type = Transient
   solve_type = PJFNK
   automatic_scaling = true
-  petsc_options_iname = '-pc_type -pc_hypre_type'
-  petsc_options_value = 'hypre boomeramg'
-  end_time = 10
+  petsc_options_iname = '-pc_type -pc_hypre_type -KSP_TYPE'
+  petsc_options_value = 'hypre boomeramg gmres'
+  end_time = 30
   dt = 0.01
   dtmin = 1e-4
   start_time = 0
@@ -98,8 +98,8 @@
   steady_state_detection = true
   fixed_point_max_its = 10
   fixed_point_min_its = 2
-  nl_abs_tol = 1e-6
-  fixed_point_rel_tol = 1e-6
+  nl_abs_tol = 1e-5
+  fixed_point_rel_tol = 1e-5
   fixed_point_abs_tol = 1e-8
 []
 [Postprocessors]
@@ -166,7 +166,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core1
     from_boundaries='1'
     search_value_conflicts = false
@@ -193,7 +193,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core2
     from_boundaries='2'
     search_value_conflicts = false
@@ -220,7 +220,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core3
     from_boundaries='3'
     search_value_conflicts = false
@@ -247,7 +247,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core4
     from_boundaries='4'
     search_value_conflicts = false
@@ -274,7 +274,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core5
     from_boundaries='5'
     search_value_conflicts = false
@@ -301,7 +301,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core6
     from_boundaries='6'
     search_value_conflicts = false
@@ -328,7 +328,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core7
     from_boundaries='7'
     search_value_conflicts = false
@@ -355,7 +355,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core8
     from_boundaries='8'
     search_value_conflicts = false
@@ -382,7 +382,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core9
     from_boundaries='9'
     search_value_conflicts = false
@@ -409,7 +409,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core10
     from_boundaries='10'
     search_value_conflicts = false
@@ -436,7 +436,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core11
     from_boundaries='11'
     search_value_conflicts = false
@@ -463,7 +463,7 @@
     type = MultiAppGeneralFieldNearestLocationTransfer
     to_multi_app = sub_app
     source_variable = 'T_wall'
-    variable = 'T_wall'
+    variable = 'T_w'
     to_blocks= core12
     from_boundaries='12'
     search_value_conflicts = false

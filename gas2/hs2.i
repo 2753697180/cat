@@ -1,5 +1,5 @@
 [Mesh]
-  file = gas.e
+  file = gas2.e
 []
 [Variables]
   [T]

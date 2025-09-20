@@ -1,0 +1,165 @@
+## HTGR assembly thermal hydraulics simulation
+## Application: MOOSE thermal hydraulics module
+## POC: April Novak anovak at anl.gov
+## If using or referring to this model, please cite as explained in
+## https://mooseframework.inl.gov/virtual_test_bed/citing.html
+
+# copy-pasta from common.i
+inlet_T = 300 # inlet fluid temperature (K)
+mdot = 1e-2 # fluid mass flowrate (kg/s)
+outlet_P = 1e6 # fluid outlet pressure (Pa)
+core_dia = '${units  2 cm -> m}'
+core_A_pipe = '${fparse 0.25 * pi * core_dia^2}' # number of elements in the THM model
+core_length=0.5 #m
+core_elems=10
+
+[GlobalParams]
+  initial_p = ${outlet_P}
+  initial_T = ${inlet_T}
+  initial_vel = '${fparse mdot / outlet_P / 8.3144598 * 4.0e-3 / inlet_T / (pi * core_dia * core_dia / 4.0)}'
+  rdg_slope_reconstruction = full
+  closures = none
+  fp = helium
+[]
+
+[Closures]
+  [none]
+    type = Closures1PhaseNone
+  []
+[]
+
+[FluidProperties]
+  [helium]
+    type = IdealGasFluidProperties
+    molar_mass = 4e-3
+    gamma = 1.668282 # should correspond to  Cp = 5189 J/kg/K
+    k = 0.2556
+    mu = 3.22639e-5
+  []
+[]
+
+[AuxVariables]
+  [T_wall]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+[]
+
+[AuxKernels]
+  [Tw_aux]
+    type = ADMaterialRealAux
+    block = channel
+    variable = T_wall
+    property = T_wall
+  []
+[]
+
+[Materials]
+  # wall friction closure
+  [f_mat]
+    type = ADWallFrictionChurchillMaterial
+    block = channel
+    D_h = D_h
+    f_D = f_D
+    vel = vel
+    rho = rho
+    mu = mu
+  []
+  # Wall heat transfer closure (all important is in Nu_mat)
+  [Re_mat]
+    type = ADReynoldsNumberMaterial
+    block = channel
+    Re = Re
+    D_h = D_h
+    mu = mu
+    vel = vel
+    rho = rho
+  []
+  [Pr_mat]
+    type = ADPrandtlNumberMaterial
+    block = channel
+    cp = cp
+    mu = mu
+    k = k
+  []
+  [Nu_mat]
+    type = ADParsedMaterial
+    block = channel
+    # Dittus-Boelter
+    function = '0.022 * pow(Re, 0.8) * pow(Pr, 0.4)'
+    f_name = 'Nu'
+    material_property_names = 'Re Pr'
+  []
+  [Hw_mat]
+    type = ADConvectiveHeatTransferCoefficientMaterial
+    block = channel
+    D_h = D_h
+    Nu = Nu
+    k = k
+  []
+  [T_wall]
+    type = ADTemperatureWall3EqnMaterial
+    Hw = Hw
+    T = T
+    q_wall = q_wall
+  []
+[]
+[Components]
+  [channel]
+    type = FlowChannel1Phase
+    position = '0 0 0'
+    orientation = '0 0 1'
+   length = ${core_length}
+    n_elems = ${core_elems}
+    A = ${core_A_pipe}
+    D_h = ${core_dia}
+  []
+  [inlet]
+    type = InletMassFlowRateTemperature1Phase
+    input = 'channel:in'
+    m_dot = ${mdot}
+    T = ${inlet_T}
+  []
+  [outlet]
+    type = Outlet1Phase
+    input = 'channel:out'
+    p = ${outlet_P}
+  []
+  [ht_ext]
+    type = HeatTransferFromExternalAppHeatFlux1Phase
+    flow_channel = channel
+    P_hf = '${fparse core_dia * pi}'
+  []
+[]
+[Preconditioning]
+  [pc]
+    type = SMP
+    full = true
+  []
+[]
+[Executioner]
+  type = Transient
+  dt = 0.1
+  start_time = 0
+
+  steady_state_detection = true
+  steady_state_tolerance = 1e-08
+
+  nl_rel_tol = 1e-5
+  nl_abs_tol = 1e-6
+
+  petsc_options_iname = '-pc_type'
+  petsc_options_value = 'lu'
+
+  solve_type = NEWTON
+  line_search = basic
+[]
+[Outputs]
+  exodus = true
+  print_linear_residuals = false
+
+  [console]
+    type = Console
+    outlier_variable_norms = false
+  []
+[]
